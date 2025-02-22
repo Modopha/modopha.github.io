@@ -55,7 +55,7 @@
             color: #00ff9d;
         }
 
-        #shop-btn, #save-btn, #load-btn, #dev-btn, #dev-enter {
+        #shop-btn, #save-btn, #load-btn {
             background-color: #3d3d3d;
             border: none;
             padding: 10px 20px;
@@ -66,11 +66,11 @@
             margin: 5px;
         }
 
-        #shop-btn:hover, #save-btn:hover, #load-btn:hover, #dev-btn:hover, #dev-enter:hover {
+        #shop-btn:hover, #save-btn:hover, #load-btn:hover {
             background-color: #4d4d4d;
         }
 
-        #shop, #dev-tab {
+        #shop {
             position: absolute;
             top: 0;
             left: 0;
@@ -89,12 +89,12 @@
             overflow-y: auto;
         }
 
-        #shop.open, #dev-tab.open {
+        #shop.open {
             transform: translateX(0);
             visibility: visible;
         }
 
-        #close-shop, #close-dev, #add-cookies {
+        #close-shop {
             background-color: #ff4444;
             border: none;
             padding: 10px 20px;
@@ -105,16 +105,8 @@
             margin: 5px 0;
         }
 
-        #add-cookies {
-            background-color: #00cc00;
-        }
-
-        #close-shop:hover, #close-dev:hover {
+        #close-shop:hover {
             background-color: #ff6666;
-        }
-
-        #add-cookies:hover {
-            background-color: #00ff00;
         }
 
         .upgrade, .ability {
@@ -151,28 +143,16 @@
         #stats p {
             margin: 5px 0;
         }
-
-        #dev-password {
-            margin: 10px 0;
-            padding: 5px;
-            border-radius: 5px;
-            border: none;
-            background-color: #3d3d3d;
-            color: #ffffff;
-            width: 80%;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Moda's Cookie Clicker</h1>
+        <h1>Cookie Clicker</h1>
         <button id="cookie">🍪</button>
         <div id="counter">Cookies: 0</div>
         <button id="shop-btn">Open Shop</button>
         <button id="save-btn">Save</button>
         <button id="load-btn">Load</button>
-        <button id="dev-btn">Dev Tab</button>
-        <input type="password" id="dev-password" placeholder="Enter Password">
         <div id="stats">
             <p>Lifetime Cookies: <span id="lifetimeCookies">0</span></p>
             <p>Click Power Level: <span id="clickPowerLevel">1</span></p>
@@ -193,12 +173,6 @@
             <h2>Abilities</h2>
             <button class="ability" id="frenzy">Frenzy (Cost: 1000)</button>
             <button class="ability" id="luckyDay">Lucky Day (Cost: 5000)</button>
-        </div>
-        <div id="dev-tab">
-            <h2>Developer Tab</h2>
-            <button id="dev-enter">Enter</button>
-            <button id="close-dev">Close Dev Tab</button>
-            <button id="add-cookies">Add 1000 Cookies</button>
         </div>
     </div>
 
@@ -229,12 +203,6 @@
         const closeShopBtn = document.getElementById('close-shop');
         const saveBtn = document.getElementById('save-btn');
         const loadBtn = document.getElementById('load-btn');
-        const devBtn = document.getElementById('dev-btn');
-        const devTab = document.getElementById('dev-tab');
-        const devPassword = document.getElementById('dev-password');
-        const devEnterBtn = document.getElementById('dev-enter');
-        const closeDevBtn = document.getElementById('close-dev');
-        const addCookiesBtn = document.getElementById('add-cookies');
         const clickUpgrade = document.getElementById('clickUpgrade');
         const autoClicker = document.getElementById('autoClicker');
         const multiplierUpgrade = document.getElementById('multiplierUpgrade');
@@ -280,8 +248,6 @@
             factoryUpgrade.disabled = cookies < getCost('factoryUpgrade');
             frenzyBtn.disabled = cookies < 1000 || frenzyActive;
             luckyDayBtn.disabled = cookies < 5000 || luckyDayActive;
-
-            addCookiesBtn.disabled = !devTab.classList.contains('open');
         }
 
         // Cookie click
@@ -393,35 +359,6 @@
 
         closeShopBtn.addEventListener('click', () => {
             shop.classList.remove('open');
-        });
-
-        // Dev tab controls
-        devBtn.addEventListener('click', () => {
-            devTab.classList.add('open');
-        });
-
-        devEnterBtn.addEventListener('click', () => {
-            const password = devPassword.value;
-            if (password === 'Adam123') {
-                devPassword.value = '';
-                alert('Developer access granted!');
-            } else {
-                devTab.classList.remove('open');
-                alert('Incorrect password!');
-            }
-        });
-
-        closeDevBtn.addEventListener('click', () => {
-            devTab.classList.remove('open');
-        });
-
-        addCookiesBtn.addEventListener('click', () => {
-            if (devTab.classList.contains('open')) {
-                cookies += 1000;
-                lifetimeCookies += 1000;
-                updateDisplay();
-                alert('Added 1000 cookies!');
-            }
         });
 
         // Save and Load
