@@ -3,410 +3,412 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Clicker - Dark Mode</title>
+    <title>Shadow Quest RPG</title>
     <style>
         body {
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            font-family: 'Cinzel', serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
             min-height: 100vh;
-            margin: 0;
-            padding: 20px;
         }
-
-        .container {
-            background-color: #2d2d2d;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            width: 400px;
+        h1 {
+            font-size: 2.8em;
+            color: #d4a017;
             text-align: center;
-            position: relative;
-            overflow: hidden;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            margin-bottom: 30px;
         }
-
-        #cookie {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            border: none;
-            background-color: #3d3d3d;
-            font-size: 2em;
-            cursor: pointer;
-            transition: transform 0.1s;
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.1));
-        }
-
-        #cookie:hover {
-            transform: scale(1.05);
-            background-color: #4d4d4d;
-        }
-
-        #cookie:active {
-            transform: scale(0.95);
-        }
-
-        #counter {
-            font-size: 2.5em;
-            margin: 20px 0;
-            color: #00ff9d;
-        }
-
-        #shop-btn, #save-btn, #load-btn {
-            background-color: #3d3d3d;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin: 5px;
-        }
-
-        #shop-btn:hover, #save-btn:hover, #load-btn:hover {
-            background-color: #4d4d4d;
-        }
-
-        #shop {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #252525;
-            padding: 20px;
-            border-radius: 15px;
-            transform: translateX(100%);
-            transition: transform 0.3s ease-in-out;
-            visibility: hidden;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-y: auto;
-        }
-
-        #shop.open {
-            transform: translateX(0);
-            visibility: visible;
-        }
-
-        #close-shop {
-            background-color: #ff4444;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin: 5px 0;
-        }
-
-        #close-shop:hover {
-            background-color: #ff6666;
-        }
-
-        .upgrade, .ability {
-            background-color: #3d3d3d;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px 0;
-            border-radius: 8px;
-            color: #ffffff;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            width: 80%;
-        }
-
-        .upgrade:hover, .ability:hover {
-            background-color: #4d4d4d;
-        }
-
-        .upgrade:disabled, .ability:disabled {
-            background-color: #333333;
-            cursor: not-allowed;
-            opacity: 0.6;
-        }
-
-        #stats {
-            background-color: #252525;
-            padding: 15px;
+        #player-stats, #inventory, #shop {
+            background: rgba(34, 34, 54, 0.9);
+            border: 1px solid #d4a017;
             border-radius: 10px;
-            margin-top: 20px;
-            text-align: left;
-            font-size: 0.9em;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
-
-        #stats p {
+        #player-stats p {
             margin: 5px 0;
+            font-size: 1.1em;
+        }
+        #game-log {
+            background: rgba(20, 20, 40, 0.85);
+            border: 1px solid #444;
+            border-radius: 10px;
+            padding: 15px;
+            height: 250px;
+            overflow-y: auto;
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #b0b0c0;
+        }
+        button {
+            background: linear-gradient(90deg, #d4a017, #a07b00);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Cinzel', serif;
+            font-size: 1em;
+            margin: 5px;
+            transition: transform 0.2s, background 0.3s;
+        }
+        button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(90deg, #e0b030, #b58c00);
+        }
+        button:disabled {
+            background: #444;
+            cursor: not-allowed;
+            transform: none;
+        }
+        #inventory ul, #shop ul {
+            list-style: none;
+            padding: 0;
+        }
+        #inventory li, #shop li {
+            padding: 10px;
+            margin: 5px 0;
+            background: rgba(50, 50, 70, 0.7);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        #inventory li:hover, #shop li:hover {
+            background: rgba(70, 70, 90, 0.9);
+        }
+        #inventory li.selected, #shop li.selected {
+            background: rgba(212, 160, 23, 0.3);
+            border: 1px solid #d4a017;
+        }
+        #controls, #combat-controls {
+            text-align: center;
+        }
+        #combat-controls {
+            display: none;
+            margin-top: 15px;
+        }
+        #game-log::-webkit-scrollbar {
+            width: 8px;
+        }
+        #game-log::-webkit-scrollbar-thumb {
+            background: #d4a017;
+            border-radius: 4px;
+        }
+        #game-log::-webkit-scrollbar-track {
+            background: #222;
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>Cookie Clicker</h1>
-        <button id="cookie">🍪</button>
-        <div id="counter">Cookies: 0</div>
-        <button id="shop-btn">Open Shop</button>
-        <button id="save-btn">Save</button>
-        <button id="load-btn">Load</button>
-        <div id="stats">
-            <p>Lifetime Cookies: <span id="lifetimeCookies">0</span></p>
-            <p>Click Power Level: <span id="clickPowerLevel">1</span></p>
-            <p>Auto Clickers: <span id="autoClickerCount">0</span></p>
-            <p>Cookie Multiplier: <span id="cookieMultiplier">1x</span></p>
-            <p>Golden Cookie Chance: <span id="goldenChance">0%</span></p>
-            <p>Factories: <span id="factoryCount">0</span></p>
-            <p>Cookies Per Second: <span id="cookiesPerSecond">0</span></p>
-        </div>
-        <div id="shop">
-            <button id="close-shop">Close Shop</button>
-            <h2>Shop</h2>
-            <button class="upgrade" id="clickUpgrade">Click Power</button>
-            <button class="upgrade" id="autoClicker">Auto Clicker</button>
-            <button class="upgrade" id="multiplierUpgrade">Cookie Multiplier</button>
-            <button class="upgrade" id="goldenUpgrade">Golden Cookie Chance</button>
-            <button class="upgrade" id="factoryUpgrade">Cookie Factory</button>
-            <h2>Abilities</h2>
-            <button class="ability" id="frenzy">Frenzy (Cost: 1000)</button>
-            <button class="ability" id="luckyDay">Lucky Day (Cost: 5000)</button>
-        </div>
+    <h1>Shadow Quest</h1>
+    <div id="player-stats">
+        <p>Health: <span id="health">100</span>/<span id="max-health">100</span> | Strength: <span id="strength">5</span> | Gold: <span id="gold">50</span></p>
+        <p>Level: <span id="level">1</span> | XP: <span id="xp">0</span>/100</p>
+        <p>Equipped - Weapon: <span id="weapon">None</span> | Armor: <span id="armor">None</span></p>
+    </div>
+    <div id="inventory">
+        <h3>Inventory (0/10 stacks)</h3>
+        <ul id="inventory-list"></ul>
+        <button onclick="useItem()">Use/Equip Selected Item</button>
+        <button onclick="discardItem()">Discard Selected Stack</button>
+    </div>
+    <div id="shop" style="display: none;">
+        <h3>Shop</h3>
+        <ul id="shop-list"></ul>
+        <button onclick="buyItem()">Buy Selected Item</button>
+        <button onclick="sellItem()">Sell Selected Stack</button>
+        <button onclick="leaveShop()">Leave Shop</button>
+    </div>
+    <div id="game-log">Welcome to Shadow Quest! Begin your journey into the shadows.</div>
+    <div id="controls">
+        <button id="explore-btn" onclick="explore()">Explore</button>
+        <button onclick="visitShop()">Visit Shop</button>
+    </div>
+    <div id="combat-controls">
+        <button onclick="fight()">Fight</button>
+        <button onclick="flee()">Flee</button>
     </div>
 
     <script>
-        let cookies = 0;
-        let lifetimeCookies = 0;
-        let clickValue = 1;
-        let clickPowerLevel = 0;
-        let autoClickers = 0;
-        let cookieMultiplier = 1;
-        let goldenChance = 0;
-        let factories = 0;
-        let frenzyActive = false;
-        let luckyDayActive = false;
-
-        const costs = {
-            clickUpgrade: { base: 50, scale: 1.15, count: 0 },
-            autoClicker: { base: 100, scale: 1.15, count: 0 },
-            multiplierUpgrade: { base: 500, scale: 1.5, count: 0 },
-            goldenUpgrade: { base: 1000, scale: 1.3, count: 0 },
-            factoryUpgrade: { base: 2000, scale: 1.2, count: 0 }
+        // Player Data
+        let player = {
+            health: 100,
+            maxHealth: 100,
+            strength: 5,
+            gold: 50,
+            level: 1,
+            xp: 0,
+            weapon: null,
+            armor: null
         };
 
-        const cookie = document.getElementById('cookie');
-        const counter = document.getElementById('counter');
-        const shopBtn = document.getElementById('shop-btn');
-        const shop = document.getElementById('shop');
-        const closeShopBtn = document.getElementById('close-shop');
-        const saveBtn = document.getElementById('save-btn');
-        const loadBtn = document.getElementById('load-btn');
-        const clickUpgrade = document.getElementById('clickUpgrade');
-        const autoClicker = document.getElementById('autoClicker');
-        const multiplierUpgrade = document.getElementById('multiplierUpgrade');
-        const goldenUpgrade = document.getElementById('goldenUpgrade');
-        const factoryUpgrade = document.getElementById('factoryUpgrade');
-        const frenzyBtn = document.getElementById('frenzy');
-        const luckyDayBtn = document.getElementById('luckyDay');
-        const lifetimeCookiesDisplay = document.getElementById('lifetimeCookies');
-        const clickPowerLevelDisplay = document.getElementById('clickPowerLevel');
-        const autoClickerCountDisplay = document.getElementById('autoClickerCount');
-        const cookieMultiplierDisplay = document.getElementById('cookieMultiplier');
-        const goldenChanceDisplay = document.getElementById('goldenChance');
-        const factoryCountDisplay = document.getElementById('factoryCount');
-        const cookiesPerSecondDisplay = document.getElementById('cookiesPerSecond');
+        let inventory = []; // Now stores { item: {...}, quantity: X }
+        let selectedItemIndex = -1;
+        let selectedShopItemIndex = -1;
+        let inCombat = false;
+        let currentEnemy = null;
+        const MAX_STACK = 99;
 
-        // Calculate current cost
-        function getCost(upgrade) {
-            return Math.floor(costs[upgrade].base * Math.pow(costs[upgrade].scale, costs[upgrade].count));
-        }
+        const shopItems = [
+            { name: "Rusty Sword", type: "weapon", damage: 5, value: 20 },
+            { name: "Leather Armor", type: "armor", health: 10, value: 30 },
+            { name: "Health Potion", type: "potion", heal: 25, value: 10 }
+        ];
 
-        // Update display and browser tab title
-        function updateDisplay() {
-            counter.textContent = `Cookies: ${Math.floor(cookies)}`;
-            document.title = `${Math.floor(cookies)} Cookies - Cookie Clicker`;
-            lifetimeCookiesDisplay.textContent = Math.floor(lifetimeCookies);
-            clickPowerLevelDisplay.textContent = clickPowerLevel;
-            autoClickerCountDisplay.textContent = autoClickers;
-            cookieMultiplierDisplay.textContent = `${cookieMultiplier}x`;
-            goldenChanceDisplay.textContent = `${goldenChance}%`;
-            factoryCountDisplay.textContent = factories;
-            cookiesPerSecondDisplay.textContent = (autoClickers + factories * 5) * cookieMultiplier * (frenzyActive ? 3 : 1);
+        const enemies = [
+            { name: "Goblin", health: 10, damage: 3, xp: 10, gold: 5 },
+            { name: "Wolf", health: 15, damage: 5, xp: 15, gold: 8 },
+            { name: "Bandit", health: 20, damage: 7, xp: 20, gold: 12 }
+        ];
 
-            clickUpgrade.textContent = `Click Power (Cost: ${getCost('clickUpgrade')})`;
-            autoClicker.textContent = `Auto Clicker (Cost: ${getCost('autoClicker')})`;
-            multiplierUpgrade.textContent = `Cookie Multiplier (Cost: ${getCost('multiplierUpgrade')})`;
-            goldenUpgrade.textContent = `Golden Cookie Chance (Cost: ${getCost('goldenUpgrade')})`;
-            factoryUpgrade.textContent = `Cookie Factory (Cost: ${getCost('factoryUpgrade')})`;
-
-            clickUpgrade.disabled = cookies < getCost('clickUpgrade');
-            autoClicker.disabled = cookies < getCost('autoClicker');
-            multiplierUpgrade.disabled = cookies < getCost('multiplierUpgrade');
-            goldenUpgrade.disabled = cookies < getCost('goldenUpgrade') || goldenChance >= 100;
-            factoryUpgrade.disabled = cookies < getCost('factoryUpgrade');
-            frenzyBtn.disabled = cookies < 1000 || frenzyActive;
-            luckyDayBtn.disabled = cookies < 5000 || luckyDayActive;
-        }
-
-        // Cookie click
-        cookie.addEventListener('click', () => {
-            let clickEarnings = clickValue * cookieMultiplier * (frenzyActive ? 3 : 1);
-            if (Math.random() * 100 < goldenChance * (luckyDayActive ? 2 : 1)) {
-                clickEarnings *= 7;
-                alert('Golden Cookie! 7x bonus!');
-            }
-            cookies += clickEarnings;
-            lifetimeCookies += clickEarnings;
-            updateDisplay();
-        });
-
-        // Upgrades
-        clickUpgrade.addEventListener('click', () => {
-            const cost = getCost('clickUpgrade');
-            if (cookies >= cost) {
-                cookies -= cost;
-                clickValue++;
-                clickPowerLevel++;
-                costs.clickUpgrade.count++;
-                updateDisplay();
-            }
-        });
-
-        autoClicker.addEventListener('click', () => {
-            const cost = getCost('autoClicker');
-            if (cookies >= cost) {
-                cookies -= cost;
-                autoClickers++;
-                costs.autoClicker.count++;
-                updateDisplay();
-            }
-        });
-
-        multiplierUpgrade.addEventListener('click', () => {
-            const cost = getCost('multiplierUpgrade');
-            if (cookies >= cost) {
-                cookies -= cost;
-                cookieMultiplier *= 2;
-                costs.multiplierUpgrade.count++;
-                updateDisplay();
-            }
-        });
-
-        goldenUpgrade.addEventListener('click', () => {
-            const cost = getCost('goldenUpgrade');
-            if (cookies >= cost && goldenChance < 100) {
-                cookies -= cost;
-                goldenChance += 5;
-                if (goldenChance > 100) goldenChance = 100;
-                costs.goldenUpgrade.count++;
-                updateDisplay();
-            }
-        });
-
-        factoryUpgrade.addEventListener('click', () => {
-            const cost = getCost('factoryUpgrade');
-            if (cookies >= cost) {
-                cookies -= cost;
-                factories++;
-                costs.factoryUpgrade.count++;
-                updateDisplay();
-            }
-        });
-
-        // Abilities
-        frenzyBtn.addEventListener('click', () => {
-            if (cookies >= 1000 && !frenzyActive) {
-                cookies -= 1000;
-                frenzyActive = true;
-                alert('Frenzy activated! 3x earnings for 30 seconds!');
-                setTimeout(() => {
-                    frenzyActive = false;
-                    updateDisplay();
-                    alert('Frenzy ended!');
-                }, 30000);
-                updateDisplay();
-            }
-        });
-
-        luckyDayBtn.addEventListener('click', () => {
-            if (cookies >= 5000 && !luckyDayActive) {
-                cookies -= 5000;
-                luckyDayActive = true;
-                alert('Lucky Day activated! Double golden chance for 60 seconds!');
-                setTimeout(() => {
-                    luckyDayActive = false;
-                    updateDisplay();
-                    alert('Lucky Day ended!');
-                }, 60000);
-                updateDisplay();
-            }
-        });
-
-        // Auto clicker and factory interval
-        setInterval(() => {
-            const autoEarnings = (autoClickers + factories * 5) * cookieMultiplier * (frenzyActive ? 3 : 1);
-            cookies += autoEarnings;
-            lifetimeCookies += autoEarnings;
-            updateDisplay();
-        }, 1000);
-
-        // Shop controls
-        shopBtn.addEventListener('click', () => {
-            shop.classList.add('open');
-        });
-
-        closeShopBtn.addEventListener('click', () => {
-            shop.classList.remove('open');
-        });
-
-        // Save and Load
-        function saveGame() {
-            const gameState = {
-                cookies,
-                lifetimeCookies,
-                clickValue,
-                clickPowerLevel,
-                autoClickers,
-                cookieMultiplier,
-                goldenChance,
-                factories,
-                costs
-            };
-            localStorage.setItem('cookieClickerSave', JSON.stringify(gameState));
-            alert('Game saved!');
-        }
-
-        function loadGame() {
-            const savedState = localStorage.getItem('cookieClickerSave');
-            if (savedState) {
-                const gameState = JSON.parse(savedState);
-                cookies = gameState.cookies || 0;
-                lifetimeCookies = gameState.lifetimeCookies || 0;
-                clickValue = gameState.clickValue || 1;
-                clickPowerLevel = gameState.clickPowerLevel || 0;
-                autoClickers = gameState.autoClickers || 0;
-                cookieMultiplier = gameState.cookieMultiplier || 1;
-                goldenChance = gameState.goldenChance || 0;
-                factories = gameState.factories || 0;
-                costs.clickUpgrade.count = gameState.costs.clickUpgrade.count || 0;
-                costs.autoClicker.count = gameState.costs.autoClicker.count || 0;
-                costs.multiplierUpgrade.count = gameState.costs.multiplierUpgrade.count || 0;
-                costs.goldenUpgrade.count = gameState.costs.goldenUpgrade.count || 0;
-                costs.factoryUpgrade.count = gameState.costs.factoryUpgrade.count || 0;
-                updateDisplay();
-                alert('Game loaded!');
+        // Helper to add items to inventory with stacking
+        function addToInventory(item, quantity = 1) {
+            let existing = inventory.find(i => i.item.name === item.name && i.item.type === item.type);
+            if (existing) {
+                existing.quantity = Math.min(existing.quantity + quantity, MAX_STACK);
+            } else if (inventory.length < 10) {
+                inventory.push({ item: { ...item }, quantity });
             } else {
-                alert('No saved game found!');
+                log("Inventory is full of unique stacks!");
+                return false;
+            }
+            return true;
+        }
+
+        // Update UI
+        function updateUI() {
+            document.getElementById("health").textContent = player.health;
+            document.getElementById("max-health").textContent = player.maxHealth;
+            document.getElementById("strength").textContent = player.strength;
+            document.getElementById("gold").textContent = player.gold;
+            document.getElementById("level").textContent = player.level;
+            document.getElementById("xp").textContent = player.xp;
+            document.getElementById("weapon").textContent = player.weapon ? player.weapon.name : "None";
+            document.getElementById("armor").textContent = player.armor ? player.armor.name : "None";
+
+            let invList = document.getElementById("inventory-list");
+            invList.innerHTML = "";
+            inventory.forEach((stack, index) => {
+                let li = document.createElement("li");
+                li.textContent = `${stack.item.name} (${stack.item.type}, Value: ${stack.item.value}) x${stack.quantity}`;
+                li.onclick = () => selectItem(index);
+                if (index === selectedItemIndex) li.classList.add("selected");
+                invList.appendChild(li);
+            });
+            document.getElementById("inventory").children[0].textContent = `Inventory (${inventory.length}/10 stacks)`;
+
+            document.getElementById("explore-btn").disabled = inCombat || player.health <= 0;
+            document.getElementById("combat-controls").style.display = inCombat ? "block" : "none";
+        }
+
+        function log(message) {
+            let logDiv = document.getElementById("game-log");
+            logDiv.innerHTML += `<p>${message}</p>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        // Item Selection
+        function selectItem(index) {
+            selectedItemIndex = index;
+            updateUI();
+        }
+
+        function selectShopItem(index) {
+            selectedShopItemIndex = index;
+            let items = document.getElementById("shop-list").children;
+            for (let i = 0; i < items.length; i++) items[i].classList.toggle("selected", i === index);
+        }
+
+        // Exploring
+        function explore() {
+            if (player.health <= 0) {
+                log("You are dead! Refresh the page to restart.");
+                return;
+            }
+            if (Math.random() < 0.7) {
+                currentEnemy = { ...enemies[Math.floor(Math.random() * enemies.length)] };
+                inCombat = true;
+                log(`A ${currentEnemy.name} emerges from the shadows! Health: ${currentEnemy.health}, Damage: ${currentEnemy.damage}`);
+            } else {
+                let loot = Math.random() < 0.5 ? { gold: 10 } : shopItems[Math.floor(Math.random() * shopItems.length)];
+                if (loot.gold) {
+                    player.gold += loot.gold;
+                    log(`You stumble upon ${loot.gold} gold coins!`);
+                } else {
+                    if (addToInventory(loot)) {
+                        log(`You discover a ${loot.name}!`);
+                    }
+                }
+            }
+            updateUI();
+        }
+
+        // Combat
+        function fight() {
+            if (!inCombat) return;
+            let playerDamage = player.strength + (player.weapon ? player.weapon.damage : 0);
+            currentEnemy.health -= playerDamage;
+            log(`You strike the ${currentEnemy.name} for ${playerDamage} damage.`);
+
+            if (currentEnemy.health <= 0) {
+                log(`The ${currentEnemy.name} falls! You gain ${currentEnemy.xp} XP and ${currentEnemy.gold} gold.`);
+                player.xp += currentEnemy.xp;
+                player.gold += currentEnemy.gold;
+                if (Math.random() < 0.5) {
+                    let loot = shopItems[Math.floor(Math.random() * shopItems.length)];
+                    if (addToInventory(loot)) {
+                        log(`The ${currentEnemy.name} drops a ${loot.name}!`);
+                    }
+                }
+                inCombat = false;
+                currentEnemy = null;
+                checkLevelUp();
+            } else {
+                player.health -= currentEnemy.damage;
+                log(`The ${currentEnemy.name} retaliates, dealing ${currentEnemy.damage} damage.`);
+                if (player.health <= 0) {
+                    log("The shadows claim you... Refresh to restart.");
+                    inCombat = false;
+                }
+            }
+            updateUI();
+        }
+
+        function flee() {
+            if (!inCombat) return;
+            if (Math.random() < 0.5) {
+                log(`You slip away from the ${currentEnemy.name}!`);
+                inCombat = false;
+                currentEnemy = null;
+            } else {
+                log(`You stumble while fleeing! The ${currentEnemy.name} strikes.`);
+                player.health -= currentEnemy.damage;
+                if (player.health <= 0) {
+                    log("The shadows claim you... Refresh to restart.");
+                    inCombat = false;
+                }
+            }
+            updateUI();
+        }
+
+        // Level Up
+        function checkLevelUp() {
+            while (player.xp >= 100) {
+                player.level++;
+                player.xp -= 100;
+                player.maxHealth += 10;
+                player.health = player.maxHealth;
+                player.strength += 2;
+                log(`You ascend to Level ${player.level}! Your power grows stronger.`);
             }
         }
 
-        saveBtn.addEventListener('click', saveGame);
-        loadBtn.addEventListener('click', loadGame);
+        // Inventory Management
+        function useItem() {
+            if (selectedItemIndex === -1 || selectedItemIndex >= inventory.length) {
+                log("Select an item stack from your inventory first!");
+                return;
+            }
+            let stack = inventory[selectedItemIndex];
+            let item = stack.item;
 
-        // Initial display update
-        updateDisplay();
+            if (item.type === "potion") {
+                player.health = Math.min(player.maxHealth, player.health + item.heal);
+                log(`You drink a ${item.name}, restoring ${item.heal} health.`);
+                stack.quantity--;
+            } else if (item.type === "weapon") {
+                player.weapon = { ...item };
+                log(`You wield the ${item.name}, feeling its weight.`);
+                stack.quantity--;
+            } else if (item.type === "armor") {
+                player.armor = { ...item };
+                player.maxHealth += item.health;
+                player.health += item.health;
+                log(`You don the ${item.name}, bolstered by its protection.`);
+                stack.quantity--;
+            }
+
+            if (stack.quantity <= 0) {
+                inventory.splice(selectedItemIndex, 1);
+            }
+            selectedItemIndex = -1;
+            updateUI();
+        }
+
+        function discardItem() {
+            if (selectedItemIndex === -1 || selectedItemIndex >= inventory.length) {
+                log("Select a stack to discard!");
+                return;
+            }
+            let stack = inventory.splice(selectedItemIndex, 1)[0];
+            log(`You cast aside ${stack.quantity} ${stack.item.name}(s).`);
+            selectedItemIndex = -1;
+            updateUI();
+        }
+
+        // Shop
+        function visitShop() {
+            if (inCombat) {
+                log("You cannot barter amidst battle!");
+                return;
+            }
+            document.getElementById("shop").style.display = "block";
+            let shopList = document.getElementById("shop-list");
+            shopList.innerHTML = "";
+            shopItems.forEach((item, index) => {
+                let li = document.createElement("li");
+                li.textContent = `${item.name} (${item.value} gold)`;
+                li.onclick = () => selectShopItem(index);
+                shopList.appendChild(li);
+            });
+        }
+
+        function buyItem() {
+            if (selectedShopItemIndex === -1) {
+                log("Choose an item to purchase!");
+                return;
+            }
+            let item = shopItems[selectedShopItemIndex];
+            if (player.gold >= item.value) {
+                player.gold -= item.value;
+                if (addToInventory(item)) {
+                    log(`You acquire a ${item.name} for ${item.value} gold.`);
+                } else {
+                    player.gold += item.value; // Refund if inventory full
+                }
+            } else {
+                log("Insufficient gold!");
+            }
+            updateUI();
+        }
+
+        function sellItem() {
+            if (selectedItemIndex === -1 || selectedItemIndex >= inventory.length) {
+                log("Select a stack to sell!");
+                return;
+            }
+            let stack = inventory[selectedItemIndex];
+            let sellValue = Math.floor(stack.item.value / 2) * stack.quantity;
+            player.gold += sellValue;
+            log(`You sell ${stack.quantity} ${stack.item.name}(s) for ${sellValue} gold.`);
+            inventory.splice(selectedItemIndex, 1);
+            selectedItemIndex = -1;
+            updateUI();
+        }
+
+        function leaveShop() {
+            document.getElementById("shop").style.display = "none";
+            selectedShopItemIndex = -1;
+        }
+
+        // Initialize
+        updateUI();
     </script>
 </body>
 </html>
